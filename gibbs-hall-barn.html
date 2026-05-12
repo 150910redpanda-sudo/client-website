@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gibbs Hall Barn — Dentdale, Yorkshire Dales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --stone: #c8bca8;
+    --stone-light: #e8e0d4;
+    --stone-dark: #8a7d6b;
+    --earth: #3d3328;
+    --earth-mid: #5c4e3f;
+    --cream: #f5f0e8;
+    --moss: #4a5240;
+    --dusk: #2a3040;
+    --ember: #c4602a;
+    --fog: #b8c4c0;
+    --ink: #1a1612;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--ember);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width .2s, height .2s, opacity .2s;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid var(--earth-mid);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all .12s ease;
+    opacity: .6;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 48px;
+    mix-blend-mode: normal;
+    transition: background .4s, padding .4s;
+  }
+  nav.scrolled {
+    background: rgba(245,240,232,.92);
+    backdrop-filter: blur(12px);
+    padding: 16px 48px;
+    border-bottom: 1px solid rgba(61,51,40,.12);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--cream);
+    transition: color .4s;
+    text-decoration: none;
+  }
+  nav.scrolled .nav-logo { color: var(--earth); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    font-weight: 300;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,.8);
+    text-decoration: none;
+    transition: color .3s;
+  }
+  nav.scrolled .nav-links a { color: var(--earth-mid); }
+  .nav-links a:hover { color: var(--ember); }
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem;
+    font-weight: 400;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid rgba(245,240,232,.6);
+    color: var(--cream);
+    padding: 10px 24px;
+    cursor: none;
+    transition: all .3s;
+    text-decoration: none;
+  }
+  nav.scrolled .nav-cta {
+    border-color: var(--earth);
+    color: var(--earth);
+  }
+  .nav-cta:hover {
+    background: var(--ember);
+    border-color: var(--ember);
+    color: var(--cream) !important;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(26,22,18,.2) 0%, rgba(26,22,18,.05) 40%, rgba(26,22,18,.5) 100%),
+      url('https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn3.jpg') center/cover no-repeat;
+    transform-origin: center;
+    animation: heroZoom 18s ease-in-out infinite alternate;
+  }
+  @keyframes heroZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 64px 80px;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem;
+    font-weight: 300;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp .8s .3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 7vw, 7rem);
+    font-weight: 400;
+    line-height: .95;
+    color: var(--cream);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp .9s .5s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--stone-light);
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(245,240,232,.82);
+    max-width: 480px;
+    opacity: 0;
+    animation: fadeUp .9s .7s forwards;
+  }
+
+  .hero-stats {
+    position: absolute;
+    right: 64px;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeUp .9s .9s forwards;
+  }
+  .hero-stat {
+    text-align: right;
+  }
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s 1.4s forwards;
+  }
+  .hero-scroll span {
+    font-family: 'DM Mono', monospace;
+    font-size: .58rem;
+    letter-spacing: .25em;
+    color: rgba(245,240,232,.5);
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, rgba(245,240,232,.4), transparent);
+    animation: scrollPulse 2s 1.5s infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: .4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(.7); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ─── INTRO STRIP ─── */
+  .intro-strip {
+    background: var(--earth);
+    padding: 40px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    overflow: hidden;
+  }
+  .strip-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--stone-light);
+    flex: 1;
+  }
+  .strip-item + .strip-item {
+    border-left: 1px solid rgba(200,188,168,.15);
+    padding-left: 32px;
+  }
+  .strip-icon {
+    font-size: 1.4rem;
+    opacity: .7;
+  }
+  .strip-text strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    display: block;
+    color: var(--cream);
+  }
+  .strip-text span {
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+  }
+
+  /* ─── STORY SECTION ─── */
+  .story {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+  }
+  .story-images {
+    position: relative;
+    overflow: hidden;
+  }
+  .story-img-main {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .8s ease;
+  }
+  .story-images:hover .story-img-main { transform: scale(1.04); }
+  .story-badge {
+    position: absolute;
+    bottom: 40px;
+    left: -1px;
+    background: var(--ember);
+    color: var(--cream);
+    padding: 14px 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+  }
+
+  .story-text {
+    background: var(--cream);
+    padding: 80px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: .63rem;
+    font-weight: 300;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--stone-dark);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--earth);
+    margin-bottom: 28px;
+  }
+  .section-title em { font-style: italic; color: var(--ember); }
+  .section-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.18rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--earth-mid);
+    margin-bottom: 20px;
+  }
+  .text-link {
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--ember);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    transition: gap .3s;
+  }
+  .text-link:hover { gap: 20px; }
+  .text-link::after {
+    content: '→';
+    font-size: .9em;
+  }
+
+  /* ─── GALLERY ─── */
+  .gallery-section {
+    background: var(--earth);
+    padding: 100px 0 0;
+  }
+  .gallery-header {
+    padding: 0 64px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .gallery-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.1;
+  }
+  .gallery-count {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem;
+    letter-spacing: .22em;
+    color: var(--stone-dark);
+    text-transform: uppercase;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 3px;
+  }
+  .gallery-cell {
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-cell:first-child {
+    grid-row: span 2;
+  }
+  .gallery-cell img {
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    object-fit: cover;
+    display: block;
+    transition: transform .7s ease, filter .4s;
+    filter: brightness(.9) saturate(.9);
+  }
+  .gallery-cell:hover img {
+    transform: scale(1.06);
+    filter: brightness(1) saturate(1.1);
+  }
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,22,18,.5) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity .4s;
+  }
+  .gallery-cell:hover .gallery-overlay { opacity: 1; }
+
+  /* ─── ROOMS ─── */
+  .rooms-section {
+    padding: 120px 64px;
+    background: var(--cream);
+  }
+  .rooms-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+  .rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .room-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--stone-light);
+    aspect-ratio: 4/5;
+  }
+  .room-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .7s ease;
+    filter: brightness(.92);
+  }
+  .room-card:hover img { transform: scale(1.07); }
+  .room-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 28px 24px;
+    background: linear-gradient(to top, rgba(26,22,18,.85) 0%, transparent 100%);
+    transform: translateY(8px);
+    transition: transform .4s;
+  }
+  .room-card:hover .room-info { transform: translateY(0); }
+  .room-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--cream);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .room-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  /* ─── AMENITIES ─── */
+  .amenities-section {
+    background: var(--earth);
+    padding: 100px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .amenities-section::before {
+    content: 'AMENITIES';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 18vw;
+    font-weight: 700;
+    color: rgba(255,255,255,.02);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: .08em;
+  }
+  .amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    position: relative;
+    z-index: 1;
+  }
+  .amenity-item {
+    background: rgba(255,255,255,.04);
+    padding: 36px 28px;
+    border: 1px solid rgba(200,188,168,.06);
+    transition: background .3s, border-color .3s;
+  }
+  .amenity-item:hover {
+    background: rgba(196,96,42,.1);
+    border-color: rgba(196,96,42,.3);
+  }
+  .amenity-icon {
+    font-size: 1.8rem;
+    margin-bottom: 14px;
+    display: block;
+    opacity: .75;
+  }
+  .amenity-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--stone-light);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .amenity-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .95rem;
+    font-weight: 300;
+    color: var(--stone-dark);
+    line-height: 1.5;
+  }
+
+  /* ─── HISTORY ─── */
+  .history-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 60vh;
+  }
+  .history-text {
+    background: var(--moss);
+    padding: 100px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .history-text .section-eyebrow { color: rgba(200,188,168,.55); }
+  .history-text .section-title { color: var(--cream); }
+  .history-text .section-body { color: rgba(245,240,232,.7); }
+  .history-image {
+    position: relative;
+    overflow: hidden;
+  }
+  .history-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: sepia(.3) brightness(.85);
+    transition: filter .6s;
+  }
+  .history-image:hover img { filter: sepia(.1) brightness(.95); }
+  .heritage-badge {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--earth);
+    border: 1px solid rgba(200,188,168,.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .heritage-badge span:first-child {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--stone);
+    font-style: italic;
+  }
+  .heritage-badge span:last-child {
+    font-family: 'DM Mono', monospace;
+    font-size: .52rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+  }
+
+  /* ─── SURROUNDINGS ─── */
+  .surroundings {
+    padding: 120px 64px;
+    background: var(--cream);
+  }
+  .surr-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+    margin-bottom: 72px;
+  }
+  .attraction-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  .attraction-item {
+    padding: 40px 36px;
+    border: 1px solid rgba(61,51,40,.08);
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s, background .3s;
+  }
+  .attraction-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--earth);
+    transform: translateY(101%);
+    transition: transform .4s ease;
+    z-index: 0;
+  }
+  .attraction-item:hover::before { transform: translateY(0); }
+  .attraction-item:hover { border-color: transparent; }
+  .attraction-content { position: relative; z-index: 1; }
+  .attraction-num {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .2em;
+    color: var(--stone-dark);
+    display: block;
+    margin-bottom: 12px;
+    transition: color .3s;
+  }
+  .attraction-item:hover .attraction-num { color: var(--stone); }
+  .attraction-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--earth);
+    margin-bottom: 10px;
+    transition: color .3s;
+    line-height: 1.2;
+  }
+  .attraction-item:hover .attraction-name { color: var(--cream); }
+  .attraction-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--earth-mid);
+    transition: color .3s;
+  }
+  .attraction-item:hover .attraction-desc { color: rgba(245,240,232,.65); }
+
+  /* ─── PRICING ─── */
+  .pricing-section {
+    background: var(--dusk);
+    padding: 100px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pricing-section::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,96,42,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .pricing-header {
+    margin-bottom: 64px;
+  }
+  .pricing-header .section-title { color: var(--cream); }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin-bottom: 48px;
+  }
+  .price-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(200,188,168,.06);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background .4s, border-color .4s;
+  }
+  .price-card.featured {
+    background: var(--ember);
+    border-color: var(--ember);
+  }
+  .price-card:not(.featured):hover {
+    background: rgba(200,188,168,.08);
+    border-color: rgba(200,188,168,.2);
+  }
+  .price-season {
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+    display: block;
+    margin-bottom: 20px;
+  }
+  .price-card.featured .price-season { color: rgba(245,240,232,.7); }
+  .price-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .price-unit {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--stone-dark);
+    margin-bottom: 24px;
+    display: block;
+  }
+  .price-card.featured .price-unit { color: rgba(245,240,232,.7); }
+  .price-includes {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .price-includes li {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(245,240,232,.65);
+    padding-left: 18px;
+    position: relative;
+  }
+  .price-includes li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--stone-dark);
+    font-size: .8em;
+  }
+  .price-card.featured .price-includes li { color: rgba(245,240,232,.85); }
+  .price-card.featured .price-includes li::before { color: rgba(245,240,232,.5); }
+
+  .pricing-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(245,240,232,.45);
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 40px;
+    border-top: 1px solid rgba(200,188,168,.08);
+  }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    position: relative;
+    height: 80vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(26,22,18,.55), rgba(26,22,18,.55)),
+      url('https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn19.jpg') center/cover no-repeat;
+    transform-origin: center;
+    animation: heroZoom 20s ease-in-out infinite alternate;
+  }
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 40px;
+  }
+  .cta-content .section-eyebrow {
+    justify-content: center;
+    color: var(--stone);
+    margin-bottom: 28px;
+  }
+  .cta-content .section-eyebrow::before { display: none; }
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 40px;
+  }
+  .cta-title em { font-style: italic; }
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    font-weight: 400;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    background: var(--ember);
+    color: var(--cream);
+    border: none;
+    padding: 18px 44px;
+    cursor: none;
+    text-decoration: none;
+    transition: background .3s, transform .3s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--earth); transform: translateY(-2px); }
+  .btn-ghost {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    font-weight: 400;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(245,240,232,.5);
+    padding: 18px 44px;
+    cursor: none;
+    text-decoration: none;
+    transition: background .3s, border-color .3s;
+    display: inline-block;
+  }
+  .btn-ghost:hover {
+    background: rgba(245,240,232,.1);
+    border-color: rgba(245,240,232,.8);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    padding: 80px 64px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 64px;
+    padding-bottom: 64px;
+    border-bottom: 1px solid rgba(200,188,168,.08);
+    margin-bottom: 40px;
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .footer-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(245,240,232,.4);
+    line-height: 1.8;
+    max-width: 300px;
+  }
+  .footer-col-title {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: var(--stone-dark);
+    margin-bottom: 24px;
+    display: block;
+  }
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer-links a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(245,240,232,.45);
+    text-decoration: none;
+    transition: color .3s;
+  }
+  .footer-links a:hover { color: var(--stone-light); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: .58rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,.2);
+  }
+  .footer-contact {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .98rem;
+    color: rgba(245,240,232,.35);
+  }
+  .footer-contact a {
+    color: var(--stone-dark);
+    text-decoration: none;
+    transition: color .3s;
+  }
+  .footer-contact a:hover { color: var(--stone-light); }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .8s ease, transform .8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: .1s; }
+  .reveal-delay-2 { transition-delay: .2s; }
+  .reveal-delay-3 { transition-delay: .3s; }
+  .reveal-delay-4 { transition-delay: .4s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .hero-content { padding: 0 24px 64px; }
+    .hero-stats { right: 24px; bottom: 64px; }
+    .hero-stat-num { font-size: 1.8rem; }
+    .intro-strip { flex-direction: column; padding: 32px 24px; }
+    .strip-item + .strip-item { border-left: none; border-top: 1px solid rgba(200,188,168,.15); padding-left: 0; padding-top: 20px; }
+    .story { grid-template-columns: 1fr; }
+    .story-images { min-height: 50vw; }
+    .story-text { padding: 48px 24px; }
+    .gallery-header { padding: 0 24px 48px; flex-direction: column; align-items: flex-start; gap: 8px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-cell:first-child { grid-row: span 1; grid-column: span 2; }
+    .rooms-section { padding: 80px 24px; }
+    .rooms-intro { grid-template-columns: 1fr; gap: 24px; }
+    .rooms-grid { grid-template-columns: 1fr; }
+    .room-card { aspect-ratio: 16/9; }
+    .amenities-section { padding: 80px 24px; }
+    .amenities-grid { grid-template-columns: repeat(2, 1fr); }
+    .history-section { grid-template-columns: 1fr; }
+    .history-text { padding: 64px 24px; }
+    .history-image { min-height: 50vw; }
+    .surroundings { padding: 80px 24px; }
+    .surr-header { grid-template-columns: 1fr; gap: 32px; }
+    .attraction-list { grid-template-columns: 1fr; }
+    .pricing-section { padding: 80px 24px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .cta-title { font-size: 2.2rem; }
+    footer { padding: 60px 24px 32px; }
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Gibbs Hall Barn</a>
+  <ul class="nav-links">
+    <li><a href="#story">The Cottage</a></li>
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#surroundings">Explore</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="tel:07973989831" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Dentdale · Yorkshire Dales National Park · Since c.1700</p>
+    <h1 class="hero-title">Where the<br><em>Dales</em> begin<br>to breathe</h1>
+    <p class="hero-sub">A masterfully converted 18th-century barn in one of England's most secluded valleys. Sleeps seven. Stays forever with you.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">7</div>
+      <div class="hero-stat-label">Guests</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">3</div>
+      <div class="hero-stat-label">Bedrooms</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">c.1700</div>
+      <div class="hero-stat-label">Est.</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ─── INTRO STRIP ─── -->
+<div class="intro-strip">
+  <div class="strip-item">
+    <span class="strip-icon">🔥</span>
+    <div class="strip-text">
+      <strong>Open Fireplace</strong>
+      <span>Stone hearth · welcome fuel included</span>
+    </div>
+  </div>
+  <div class="strip-item">
+    <span class="strip-icon">🐕</span>
+    <div class="strip-text">
+      <strong>Dog Friendly</strong>
+      <span>One dog welcome · enclosed garden</span>
+    </div>
+  </div>
+  <div class="strip-item">
+    <span class="strip-icon">🌄</span>
+    <div class="strip-text">
+      <strong>2.5 miles to Dent</strong>
+      <span>Pubs · cafes · village store nearby</span>
+    </div>
+  </div>
+  <div class="strip-item">
+    <span class="strip-icon">🚂</span>
+    <div class="strip-text">
+      <strong>Settle-Carlisle Railway</strong>
+      <span>Highest station in England · 5 miles</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── STORY ─── -->
+<section class="story" id="story">
+  <div class="story-images">
+    <img class="story-img-main"
+      src="https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn15.jpg"
+      alt="Gibbs Hall Barn exterior"
+      onerror="this.src='https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn3.jpg'">
+    <div class="story-badge">Barn Conversion</div>
+  </div>
+  <div class="story-text reveal">
+    <p class="section-eyebrow">The Cottage</p>
+    <h2 class="section-title">Stone walls,<br>exposed beams,<br><em>open skies</em></h2>
+    <p class="section-body">Gibbs Hall Barn is a sympathetic conversion of an old farm building, set within the stunning Cumbrian countryside of the Yorkshire Dales National Park. Original stone walls and high timber-beamed ceilings are paired with every modern comfort.</p>
+    <p class="section-body">The spacious open-plan living room — with its roaring fireplace and full-height glass doors framing the valley — becomes the natural heart of every stay. Spacious enough for families, intimate enough for two.</p>
+    <a href="#rooms" class="text-link">Explore the rooms</a>
+  </div>
+</section>
+
+<!-- ─── GALLERY ─── -->
+<section class="gallery-section">
+  <div class="gallery-header reveal">
+    <h2 class="gallery-title">Life inside<br><em>the barn</em></h2>
+    <span class="gallery-count">— 20+ Images</span>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-cell">
+      <img src="https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn12.jpg" alt="Living room with fireplace">
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-cell">
+      <img src="https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn14.jpg" alt="Interior detail">
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-cell">
+      <img src="https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn16.jpg" alt="Bedroom">
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-cell">
+      <img src="https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn05.jpg" alt="Kitchen">
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-cell">
+      <img src="https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn06.jpg" alt="Bathroom">
+      <div class="gallery-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ROOMS ─── -->
+<section class="rooms-section" id="rooms">
+  <div class="rooms-intro">
+    <div class="reveal">
+      <p class="section-eyebrow">Accommodation</p>
+      <h2 class="section-title">Three bedrooms,<br>two bathrooms,<br><em>seven souls</em></h2>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <p class="section-body">The master bedroom occupies the lower ground floor with en-suite shower, king-size double and an additional single. Upstairs, a second king double and a twin room share the family bathroom. Every room is dressed in quality linens — included in the rate.</p>
+    </div>
+  </div>
+  <div class="rooms-grid">
+    <div class="room-card reveal">
+      <img src="https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn07.jpg" alt="Master bedroom">
+      <div class="room-info">
+        <span class="room-name">Master Bedroom</span>
+        <span class="room-detail">King-size + single · en-suite shower · lower ground floor</span>
+      </div>
+    </div>
+    <div class="room-card reveal reveal-delay-1">
+      <img src="https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn08.jpg" alt="Double bedroom">
+      <div class="room-info">
+        <span class="room-name">King Double</span>
+        <span class="room-detail">5ft king-size double · upper floor · garden views</span>
+      </div>
+    </div>
+    <div class="room-card reveal reveal-delay-2">
+      <img src="https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn10.jpg" alt="Twin bedroom">
+      <div class="room-info">
+        <span class="room-name">Twin Room</span>
+        <span class="room-detail">Two single beds · ideal for children or adults</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── AMENITIES ─── -->
+<section class="amenities-section" id="amenities">
+  <div style="margin-bottom: 64px;" class="reveal">
+    <p class="section-eyebrow" style="color: rgba(200,188,168,.45);">Facilities & Inclusions</p>
+    <h2 class="section-title" style="color: var(--cream);">Everything you<br>need, <em>nothing you don't</em></h2>
+  </div>
+  <div class="amenities-grid">
+    <div class="amenity-item reveal">
+      <span class="amenity-icon">🔥</span>
+      <span class="amenity-name">Open Fireplace</span>
+      <p class="amenity-desc">Stone hearth with welcome pack of logs included. The heart of every evening.</p>
+    </div>
+    <div class="amenity-item reveal reveal-delay-1">
+      <span class="amenity-icon">📶</span>
+      <span class="amenity-name">WiFi & Smart TV</span>
+      <p class="amenity-desc">High-speed WiFi throughout. Smart TV with Freeview and streaming.</p>
+    </div>
+    <div class="amenity-item reveal reveal-delay-2">
+      <span class="amenity-icon">🍳</span>
+      <span class="amenity-name">Fully Equipped Kitchen</span>
+      <p class="amenity-desc">Dishwasher, fridge-freezer, microwave, electric oven & hob, full crockery.</p>
+    </div>
+    <div class="amenity-item reveal reveal-delay-3">
+      <span class="amenity-icon">🚿</span>
+      <span class="amenity-name">Two Bathrooms</span>
+      <p class="amenity-desc">En-suite walk-in shower to master. Family bathroom with full bath & shower.</p>
+    </div>
+    <div class="amenity-item reveal">
+      <span class="amenity-icon">🌿</span>
+      <span class="amenity-name">Enclosed Garden</span>
+      <p class="amenity-desc">Private lawn and patio with countryside views. Fully enclosed — perfect for dogs.</p>
+    </div>
+    <div class="amenity-item reveal reveal-delay-1">
+      <span class="amenity-icon">🚗</span>
+      <span class="amenity-name">Private Parking</span>
+      <p class="amenity-desc">Gravel off-road parking for several cars within the grounds.</p>
+    </div>
+    <div class="amenity-item reveal reveal-delay-2">
+      <span class="amenity-icon">🚲</span>
+      <span class="amenity-name">Bike Storage</span>
+      <p class="amenity-desc">Secure storage for cycles. The Dales Way and Yorkshire Dales Cycleway are on your doorstep.</p>
+    </div>
+    <div class="amenity-item reveal reveal-delay-3">
+      <span class="amenity-icon">⚡</span>
+      <span class="amenity-name">All Bills Included</span>
+      <p class="amenity-desc">Electricity, heating, bed linen, towels and welcome fuel all included in the rate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HISTORY ─── -->
+<section class="history-section">
+  <div class="history-text reveal">
+    <p class="section-eyebrow">Heritage</p>
+    <h2 class="section-title">Three centuries<br>in the <em>making</em></h2>
+    <p class="section-body">The Gibbs Hall farmstead dates to the late 17th or early 18th century — a Grade II listed complex of sandstone and slate in the heart of Dentdale. The farmhouse, though now a consolidated ruin, retains its chamfered mullion windows and corbelled chimney stack.</p>
+    <p class="section-body">The former barn, quietly converted to a dwelling, carries that same spirit of place. Thick stone walls, original proportions and the drama of the surrounding landscape remain unchanged across 300 years.</p>
+  </div>
+  <div class="history-image">
+    <img src="https://dalesandlakes.co.uk/wp-content/uploads/2024/04/gibbshallbarn03.jpg" alt="Historic barn exterior">
+    <div class="heritage-badge">
+      <span>c.1700</span>
+      <span>Grade II Listed Farmstead</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SURROUNDINGS ─── -->
+<section class="surroundings" id="surroundings">
+  <div class="surr-header">
+    <div class="reveal">
+      <p class="section-eyebrow">Explore</p>
+      <h2 class="section-title">The Dales,<br>the Lakes,<br><em>the railway</em></h2>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <p class="section-body">Leave the car behind for days, or venture further. The Lake District is under 30 miles west. Wensleydale and the Three Peaks are on your eastern horizon. Every direction promises something extraordinary.</p>
+    </div>
+  </div>
+  <div class="attraction-list">
+    <div class="attraction-item reveal">
+      <div class="attraction-content">
+        <span class="attraction-num">01 — On your doorstep</span>
+        <h3 class="attraction-name">Dent Village</h3>
+        <p class="attraction-desc">Cobbled streets, two real ale pubs, three cafes, a heritage centre celebrating Adam Sedgwick and a well-stocked village store. Under 3 miles.</p>
+      </div>
+    </div>
+    <div class="attraction-item reveal reveal-delay-1">
+      <div class="attraction-content">
+        <span class="attraction-num">02 — 5 miles east</span>
+        <h3 class="attraction-name">Settle–Carlisle Railway</h3>
+        <p class="attraction-desc">Dent Station — the highest mainline station in England at 1,150ft. Cross the Arten Gill and Dent Head viaducts. Ride to Carlisle or Leeds for a day out.</p>
+      </div>
+    </div>
+    <div class="attraction-item reveal reveal-delay-2">
+      <div class="attraction-content">
+        <span class="attraction-num">03 — Walking</span>
+        <h3 class="attraction-name">Dales Way & Cycleway</h3>
+        <p class="attraction-desc">Both the Dales Way footpath and the Yorkshire Dales Cycleway pass through Dent village. Hundreds of miles of trails directly accessible on foot or bike.</p>
+      </div>
+    </div>
+    <div class="attraction-item reveal reveal-delay-3">
+      <div class="attraction-content">
+        <span class="attraction-num">04 — Under 30 miles</span>
+        <h3 class="attraction-name">Lake District National Park</h3>
+        <p class="attraction-desc">Windermere, Coniston, Ambleside and the southern Lakes are all within easy reach for a spectacular day trip west.</p>
+      </div>
+    </div>
+    <div class="attraction-item reveal">
+      <div class="attraction-content">
+        <span class="attraction-num">05 — Day trips</span>
+        <h3 class="attraction-name">White Scar Cave & The Dales</h3>
+        <p class="attraction-desc">Visit England's longest showcave at Ingleton. Explore Hawes, the Wensleydale Creamery, Sedbergh's independent bookshops and Kirkby Lonsdale.</p>
+      </div>
+    </div>
+    <div class="attraction-item reveal reveal-delay-1">
+      <div class="attraction-content">
+        <span class="attraction-num">06 — Wildlife</span>
+        <h3 class="attraction-name">River Dee & the Valley</h3>
+        <p class="attraction-desc">Meander beside the Dee spotting heron, dippers and kingfishers. The views from the high fells above Dentdale stretch for miles in every direction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-header reveal">
+    <p class="section-eyebrow" style="color: rgba(200,188,168,.4);">Rates & Availability</p>
+    <h2 class="section-title">Simple,<br><em>transparent</em> pricing</h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <span class="price-season">Seven Nights — Low Season</span>
+      <div class="price-amount">£669</div>
+      <span class="price-unit">per week from</span>
+      <ul class="price-includes">
+        <li>All bills included</li>
+        <li>Bed linen & towels</li>
+        <li>Welcome fire fuel</li>
+        <li>Private off-road parking</li>
+        <li>WiFi & Smart TV</li>
+      </ul>
+    </div>
+    <div class="price-card featured reveal reveal-delay-1">
+      <span class="price-season">Short Breaks — Off Peak</span>
+      <div class="price-amount">£180</div>
+      <span class="price-unit">per night · 3 night min.</span>
+      <ul class="price-includes">
+        <li>Flexible arrival day</li>
+        <li>All bills included</li>
+        <li>Bed linen & towels</li>
+        <li>Welcome fire fuel</li>
+        <li>One dog welcome</li>
+      </ul>
+    </div>
+    <div class="price-card reveal reveal-delay-2">
+      <span class="price-season">Seven Nights — Peak Season</span>
+      <div class="price-amount">£1,289</div>
+      <span class="price-unit">per week up to</span>
+      <ul class="price-includes">
+        <li>Summer & school holidays</li>
+        <li>All bills included</li>
+        <li>Bed linen & towels</li>
+        <li>Welcome fire fuel</li>
+        <li>Private enclosed garden</li>
+      </ul>
+    </div>
+  </div>
+  <p class="pricing-note reveal">A refundable damage deposit applies. Payment by card or bank transfer. Short breaks available year-round — please enquire. Holiday cancellation insurance is recommended.</p>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-content">
+    <p class="section-eyebrow">Ready to escape?</p>
+    <h2 class="cta-title">Book your stay<br>in <em>Dentdale</em></h2>
+    <div class="cta-buttons">
+      <a href="tel:07973989831" class="btn-primary">Call to Book · 07973 989831</a>
+      <a href="mailto:bookings@dalesandlakes.co.uk" class="btn-ghost">Email the Owner</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <span class="footer-brand">Gibbs Hall Barn</span>
+      <p class="footer-desc">A sympathetic conversion of an 18th-century farm building in the heart of Dentdale, Yorkshire Dales National Park. Managed by Dales & Lakes Holiday Cottages.</p>
+    </div>
+    <div>
+      <span class="footer-col-title">Navigate</span>
+      <ul class="footer-links">
+        <li><a href="#story">The Cottage</a></li>
+        <li><a href="#rooms">Rooms & Beds</a></li>
+        <li><a href="#amenities">Facilities</a></li>
+        <li><a href="#surroundings">Explore the Area</a></li>
+        <li><a href="#pricing">Rates & Pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <span class="footer-col-title">Contact</span>
+      <ul class="footer-links">
+        <li><a href="tel:07973989831">0797 3989831</a></li>
+        <li><a href="mailto:bookings@dalesandlakes.co.uk">bookings@dalesandlakes.co.uk</a></li>
+        <li><a href="https://dalesandlakes.co.uk/accommodation/gibbs-hall-barn/" target="_blank">Check Availability</a></li>
+        <li><a href="https://www.independentcottages.co.uk/yorkshire_dales/gibbs-hall-barn-ref3765" target="_blank">Independent Cottages</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Dales & Lakes / Discover Dentdale Ltd · Dolly's Cottage, The Laning, Dent, Cumbria LA10 5QJ</span>
+    <span class="footer-contact">Yorkshire Dales National Park · <a href="https://www.yorkshiredales.org.uk" target="_blank">yorkshiredales.org.uk</a></span>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+    rx += (mx - rx) * .12;
+    ry += (my - ry) * .12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button, .attraction-item, .room-card, .gallery-cell').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '18px';
+      cursor.style.height = '18px';
+      ring.style.width = '56px';
+      ring.style.height = '56px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '8px';
+      cursor.style.height = '8px';
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+    });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
