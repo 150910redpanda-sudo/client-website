@@ -811,6 +811,52 @@
     border-top: 1px solid rgba(200,188,168,.08);
   }
 
+  /* ─── GOOD TO KNOW ─── */
+  .policies-section {
+    background: var(--earth);
+    padding: 40px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .policies-header {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .policies-header .section-title { color: var(--cream); }
+  .policies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .policy-item {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(200,188,168,.06);
+    padding: 18px 20px;
+    text-align: center;
+    transition: background .3s, border-color .3s;
+  }
+  .policy-item:hover {
+    background: rgba(196,96,42,.1);
+    border-color: rgba(196,96,42,.3);
+  }
+  .policy-name {
+    font-family: 'Playfair Display', serif;
+    font-size: .95rem;
+    font-weight: 400;
+    color: var(--stone-light);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .policy-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .88rem;
+    font-weight: 300;
+    color: var(--stone-dark);
+    line-height: 1.4;
+  }
+
   /* ─── CTA ─── */
   .cta-section {
     position: relative;
@@ -851,6 +897,19 @@
     margin-bottom: 40px;
   }
   .cta-title em { font-style: italic; }
+  .cta-consent {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .9rem;
+    font-weight: 300;
+    color: rgba(245,240,232,.4);
+    margin-top: 28px;
+  }
+  .cta-consent a {
+    color: rgba(245,240,232,.7);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cta-consent a:hover { color: var(--cream); }
   .cta-buttons {
     display: flex;
     gap: 16px;
@@ -900,7 +959,7 @@
   }
   .footer-top {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 64px;
     padding-bottom: 64px;
     border-bottom: 1px solid rgba(200,188,168,.08);
@@ -971,6 +1030,73 @@
   }
   .footer-contact a:hover { color: var(--stone-light); }
 
+  /* ─── COOKIE CONSENT ─── */
+  .cookie-banner {
+    position: fixed;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    z-index: 500;
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--ink);
+    border: 1px solid rgba(200,188,168,.15);
+    padding: 24px 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-between;
+    box-shadow: 0 12px 40px rgba(0,0,0,.35);
+    transform: translateY(140%);
+    opacity: 0;
+    transition: transform .5s ease, opacity .5s ease;
+  }
+  .cookie-banner.visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .cookie-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .98rem;
+    font-weight: 300;
+    color: rgba(245,240,232,.75);
+    line-height: 1.6;
+    flex: 1 1 320px;
+  }
+  .cookie-text a {
+    color: var(--stone-light);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cookie-actions {
+    display: flex;
+    gap: 12px;
+    flex: 0 0 auto;
+  }
+  .cookie-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    cursor: none;
+    border: 1px solid rgba(245,240,232,.5);
+    background: transparent;
+    color: var(--cream);
+    transition: background .3s, border-color .3s;
+  }
+  .cookie-btn.accept {
+    background: var(--ember);
+    border-color: var(--ember);
+  }
+  .cookie-btn:hover { border-color: var(--stone-light); }
+  @media (max-width: 640px) {
+    .cookie-banner { left: 12px; right: 12px; bottom: 12px; padding: 20px; }
+    .cookie-actions { width: 100%; }
+    .cookie-btn { flex: 1; }
+  }
+
   /* ─── SCROLL REVEAL ─── */
   .reveal {
     opacity: 0;
@@ -1016,6 +1142,8 @@
     .attraction-list { grid-template-columns: 1fr; }
     .pricing-section { padding: 80px 24px; }
     .pricing-grid { grid-template-columns: 1fr; }
+    .policies-section { padding: 32px 24px; }
+    .policies-grid { grid-template-columns: 1fr; }
     .cta-title { font-size: 2.2rem; }
     footer { padding: 60px 24px 32px; }
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
@@ -1109,7 +1237,7 @@
     <p class="section-eyebrow">The Barn</p>
     <h2 class="section-title">Stone walls,<br>exposed beams,<br><em>open skies</em></h2>
     <p class="section-body">Gibbs Hall Barn is a sympathetic conversion of an old farm building, set within the stunning Cumbrian countryside of the Yorkshire Dales National Park. Original stone walls and high timber-beamed ceilings are paired with every modern comfort.</p>
-    <p class="section-body">The spacious open-plan living room — with a roaring fire and full-height glass doors framing the valley — becomes the natural heart of every stay. Spacious enough for families, intimate enough for two.</p>
+    <p class="section-body">The spacious open-plan living room — with a roaring fire and full-height glass doors framing the valley — becomes the natural heart of every stay. Spacious enough for families with children, intimate enough for two.</p>
     <a href="#rooms" class="text-link">Explore the rooms</a>
   </div>
 </section>
@@ -1219,6 +1347,14 @@
       <span class="amenity-name">All Bills Included</span>
       <p class="amenity-desc">Electricity, heating, bed linen, towels and welcome fuel all included in the rate.</p>
     </div>
+    <div class="amenity-item reveal">
+      <span class="amenity-name">Cot & Highchair</span>
+      <p class="amenity-desc">Travel cot and highchair available on request for younger guests.</p>
+    </div>
+    <div class="amenity-item reveal reveal-delay-1">
+      <span class="amenity-name">CD Player</span>
+      <p class="amenity-desc">A classic CD player for evenings by the fire.</p>
+    </div>
   </div>
 </section>
 
@@ -1228,7 +1364,7 @@
     <p class="section-eyebrow">Heritage</p>
     <h2 class="section-title">Three centuries<br>in the <em>making</em></h2>
     <p class="section-body">The Gibbs Hall farmstead dates to the late 17th or early 18th century — a Grade II listed complex of sandstone and slate in the heart of Dentdale. The farmhouse, though now a consolidated ruin, retains its chamfered mullion windows and corbelled chimney stack.</p>
-    <p class="section-body">The former barn, quietly converted to a dwelling, carries that same spirit of place. Thick stone walls, original proportions and the drama of the surrounding landscape remain unchanged across 300 years.</p>
+    <p class="section-body">The former barn, converted to a cottage, carries the same spirit of place. Thick stone walls, original proportions and the dramatic surrounding landscape remain unchanged across 300 years.</p>
   </div>
   <div class="history-image">
     <img src="image14.jpeg">
@@ -1253,9 +1389,9 @@
   <div class="attraction-list">
     <div class="attraction-item reveal">
       <div class="attraction-content">
-        <span class="attraction-num">01 — On your doorstep</span>
-        <h3 class="attraction-name">Dent Village</h3>
-        <p class="attraction-desc">Cobbled streets, two real ale pubs, three cafes, a village store, a heritage centre celebrating country life. Dent is the birthplace of the geologist Adam Sedgewick. Around 2 miles.</p>
+        <span class="attraction-num">01 — Local village</span>
+        <h3 class="attraction-name">Dent Village (2.2 miles)</h3>
+        <p class="attraction-desc">Cobbled streets, two real ale pubs, three cafes, a village store, a heritage centre celebrating country life. Dent is the birthplace of the geologist Adam Sedgewick.</p>
       </div>
     </div>
     <div class="attraction-item reveal reveal-delay-1">
@@ -1305,7 +1441,7 @@
   <div class="pricing-grid">
     <div class="price-card reveal">
       <span class="price-season">Seven Nights — Low Season</span>
-      <div class="price-amount">£669</div>
+      <div class="price-amount">£679</div>
       <span class="price-unit">per week from</span>
       <ul class="price-includes">
         <li>All bills included</li>
@@ -1329,7 +1465,7 @@
     </div>
     <div class="price-card reveal reveal-delay-2">
       <span class="price-season">Seven Nights — Peak Season</span>
-      <div class="price-amount">£1,289</div>
+      <div class="price-amount">£1,239</div>
       <span class="price-unit">per week up to</span>
       <ul class="price-includes">
         <li>Summer & school holidays</li>
@@ -1343,6 +1479,27 @@
   <p class="pricing-note reveal">A refundable damage deposit applies. Payment by card or bank transfer. Short breaks available year-round — please enquire. Holiday cancellation insurance is recommended.</p>
 </section>
 
+<!-- ─── GOOD TO KNOW ─── -->
+<section class="policies-section" id="good-to-know">
+  <div class="policies-header reveal">
+    <p class="section-eyebrow" style="color: rgba(200,188,168,.45);">Good to Know</p>
+  </div>
+  <div class="policies-grid">
+    <div class="policy-item reveal">
+      <span class="policy-name">Accessibility</span>
+      <p class="policy-desc">Not suitable for the disabled due to the layout on different levels and fire exit access.</p>
+    </div>
+    <div class="policy-item reveal reveal-delay-1">
+      <span class="policy-name">Smoking</span>
+      <p class="policy-desc">You are not allowed to smoke during your stay.</p>
+    </div>
+    <div class="policy-item reveal reveal-delay-2">
+      <span class="policy-name">Payment Options</span>
+      <p class="policy-desc">Cheque, credit / debit card, bank transfer.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ─── CTA ─── -->
 <section class="cta-section">
   <div class="cta-bg"></div>
@@ -1353,6 +1510,7 @@
       <a href="tel:07973989831" class="btn-primary">Call to Book · 07973 989831</a>
       <a href="mailto:bookings@dalesandlakes.co.uk" class="btn-ghost">Email the Owner</a>
     </div>
+    <p class="cta-consent">By booking you agree to our <a href="terms-and-conditions.html">Terms &amp; Conditions</a> and <a href="privacy-policy.html">Privacy Policy</a>.</p>
   </div>
 </section>
 
@@ -1382,12 +1540,29 @@
         <li><a href="https://www.independentcottages.co.uk/yorkshire_dales/gibbs-hall-barn-ref3765" target="_blank">Independent Cottages</a></li>
       </ul>
     </div>
+    <div>
+      <span class="footer-col-title">Legal</span>
+      <ul class="footer-links">
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="cookie-policy.html">Cookie Policy</a></li>
+        <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+      </ul>
+    </div>
   </div>
   <div class="footer-bottom">
     <span class="footer-copy">© 2026 Dales & Lakes / Discover Dentdale Ltd · Dolly's Cottage, The Laning, Dent, Cumbria LA10 5QJ</span>
     <span class="footer-contact">Yorkshire Dales National Park · <a href="https://www.yorkshiredales.org.uk" target="_blank">yorkshiredales.org.uk</a></span>
   </div>
 </footer>
+
+<!-- ─── COOKIE CONSENT ─── -->
+<div class="cookie-banner" id="cookieBanner">
+  <p class="cookie-text">We use cookies to help this site work well and to understand how it's used. See our <a href="cookie-policy.html">Cookie Policy</a> and <a href="privacy-policy.html">Privacy Policy</a> for details.</p>
+  <div class="cookie-actions">
+    <button class="cookie-btn" id="cookieDecline" type="button">Decline</button>
+    <button class="cookie-btn accept" id="cookieAccept" type="button">Accept</button>
+  </div>
+</div>
 
 <script>
   // Custom cursor
@@ -1437,6 +1612,19 @@
     });
   }, { threshold: 0.12 });
   revealEls.forEach(el => observer.observe(el));
+
+  // Cookie consent
+  const cookieBanner = document.getElementById('cookieBanner');
+  const cookieChoice = localStorage.getItem('ghb_cookie_consent');
+  if (!cookieChoice) {
+    setTimeout(() => cookieBanner.classList.add('visible'), 800);
+  }
+  function setCookieConsent(value) {
+    localStorage.setItem('ghb_cookie_consent', value);
+    cookieBanner.classList.remove('visible');
+  }
+  document.getElementById('cookieAccept').addEventListener('click', () => setCookieConsent('accepted'));
+  document.getElementById('cookieDecline').addEventListener('click', () => setCookieConsent('declined'));
 </script>
 </body>
 </html>
