@@ -1,0 +1,6 @@
+# Security contact for gibbshallbarn.com — see RFC 9116.
+# This is a static brochure site with no accounts, forms or payments.
+Contact: mailto:bookings@dalesandlakes.co.uk
+Expires: 2027-08-09T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://gibbshallbarn.com/.well-known/security.txt

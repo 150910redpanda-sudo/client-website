@@ -1,0 +1,243 @@
+/* Shared styles for the legal pages and the 404 page.
+   Previously duplicated inline in every legal page; kept external so the
+   Content-Security-Policy can forbid inline styles. */
+
+:root {
+  --stone: #c8bca8;
+  --stone-light: #e8e0d4;
+  --stone-dark: #8a7d6b;
+  --earth: #3d3328;
+  --earth-mid: #5c4e3f;
+  --cream: #f5f0e8;
+  --moss: #4a5240;
+  --dusk: #2a3040;
+  --ember: #c4602a;
+  --ember-text: #a34a1c;
+  --ink: #1a1612;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -100px;
+  z-index: 1000;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: 'DM Mono', monospace;
+  font-size: .72rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 14px 22px;
+  text-decoration: none;
+  transition: top .2s;
+}
+.skip-link:focus { top: 12px; }
+
+header.legal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px 64px;
+  background: var(--ink);
+}
+.legal-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--cream);
+  text-decoration: none;
+  letter-spacing: .02em;
+}
+.legal-back {
+  font-family: 'DM Mono', monospace;
+  font-size: .68rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--stone);
+  text-decoration: none;
+  border: 1px solid rgba(200,188,168,.35);
+  padding: 10px 20px;
+  transition: border-color .3s, color .3s;
+}
+.legal-back:hover { border-color: var(--stone-light); color: var(--stone-light); }
+
+main.legal-content {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 72px 24px 100px;
+  flex: 1 0 auto;
+  width: 100%;
+}
+.legal-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: .68rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ember-text);
+  margin-bottom: 16px;
+  display: block;
+}
+h1.legal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: var(--earth);
+  margin-bottom: 12px;
+  line-height: 1.15;
+}
+.legal-updated {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--earth-mid);
+  margin-bottom: 48px;
+  display: block;
+}
+.legal-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--earth);
+  margin: 40px 0 14px;
+}
+.legal-content p, .legal-content li {
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--earth-mid);
+}
+.legal-content ul { margin: 12px 0 12px 24px; }
+.legal-content li { margin-bottom: 8px; }
+.legal-content a { color: var(--ember-text); }
+
+table.cookie-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0 32px;
+  font-size: 1rem;
+}
+table.cookie-table th, table.cookie-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(61,51,40,.15);
+  font-weight: 300;
+  color: var(--earth-mid);
+  vertical-align: top;
+}
+table.cookie-table th {
+  font-family: 'DM Mono', monospace;
+  font-size: .62rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--earth);
+  font-weight: 400;
+}
+/* Tables must not force the page to scroll sideways on a phone. */
+.table-scroll { overflow-x: auto; }
+
+footer.legal-footer {
+  background: var(--ink);
+  padding: 32px 64px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.legal-footer span, .legal-footer a {
+  font-family: 'DM Mono', monospace;
+  font-size: .58rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,.6);
+}
+.legal-footer a { color: var(--stone); }
+
+/* ─── 404 ─── */
+.error-page {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 24px;
+  gap: 8px;
+}
+.error-code {
+  font-family: 'DM Mono', monospace;
+  font-size: .7rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--ember-text);
+}
+.error-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 400;
+  color: var(--earth);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.error-body {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--earth-mid);
+  max-width: 460px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.error-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.error-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: .68rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 16px 34px;
+  background: var(--ember);
+  color: var(--cream);
+  transition: background .3s;
+}
+.error-btn:hover { background: var(--earth); }
+.error-btn.ghost {
+  background: transparent;
+  color: var(--earth);
+  border: 1px solid rgba(61,51,40,.4);
+}
+.error-btn.ghost:hover { background: rgba(61,51,40,.06); }
+
+@media (max-width: 640px) {
+  header.legal-nav { padding: 20px 24px; }
+  footer.legal-footer { padding: 28px 24px; }
+  table.cookie-table { font-size: .9rem; }
+  main.legal-content { padding: 48px 20px 72px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: .001ms !important;
+    animation-duration: .001ms !important;
+  }
+}

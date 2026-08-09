@@ -1,0 +1,20 @@
+# Files kept in the repository but deliberately not deployed.
+
+# Master photo originals. The site serves the optimised WebP versions in
+# assets/img/; these stay in git so images can be re-encoded later.
+assets/img-src/
+image1.jpeg
+image2.jpeg
+image6.jpeg
+image8.jpeg
+image14.jpeg
+image17.jpeg
+image22.jpeg
+final_kitchen.png
+d4dc77c6-0cff-4da6-b90d-1aa626aa4bc5.png
+
+# Project documentation — not site content, and should not be publicly served.
+*.md
+
+# Local tooling
+node_modules/

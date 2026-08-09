@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Gibbs Hall Barn">
+  <rect width="64" height="64" fill="#3d3328"/>
+  <!-- Barn silhouette: gable roof over a stone wall, with a lit doorway -->
+  <path d="M12 30 L32 15 L52 30 L52 52 L12 52 Z" fill="#e8e0d4"/>
+  <path d="M12 30 L32 15 L52 30 L52 34 L32 19 L12 34 Z" fill="#c8bca8"/>
+  <rect x="27" y="36" width="10" height="16" fill="#c4602a"/>
+</svg>
