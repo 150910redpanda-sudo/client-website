@@ -329,6 +329,14 @@ The website collects no personal data itself. Storage inventory, complete:
 |---|---|---|
 | `ghb_cookie_consent` | local storage, first-party | No — it only records your choice |
 | Vercel Web Analytics | cookieless, no device storage | Yes — loaded only after "Accept" |
+| Google Maps embed (added 2 Oct 2026) | third-party cookies set by Google | Loads automatically, **not** consent-gated — see note below |
+
+**Google Maps (2 Oct 2026).** The Location section embeds a Google map that
+loads with the page, at the owner's request. Google may set cookies before the
+visitor has made any choice, which UK PECR would normally require consent for.
+The cookie policy, privacy policy and banner text disclose this honestly, but
+the strictly compliant option is to load the map only after consent or behind a
+"Show map" click. Flag this in the legal review (P1-7).
 
 The cookie policy now lists exactly this, names Vercel and Google Fonts as the
 third parties involved, and drops the vague "analytics (if enabled)" row. The
@@ -384,11 +392,13 @@ The full list, after this pass:
 |---|---|---|---|
 | Vercel | Hosting, analytics | IP, user agent, page path | Site is down |
 | Dales & Lakes | Booking (outbound link) | Nothing until a visitor clicks | Booking button leads nowhere |
+| Google Maps | Embedded location map (added 2 Oct 2026) | IP, user agent, may set cookies | Map area is blank; rest of page unaffected |
 
 Reduced from four to two: the hot-linked images were pulled in-house and the
 Google Fonts dependency was removed by self-hosting the typefaces. Vercel is now
 the only third party a visitor's browser contacts, and it is the host — an
-unavoidable dependency. Every outbound link is `rel="noopener noreferrer"`.
+unavoidable dependency. (Since 2 October 2026 Google is a second one, via the
+Location map embed.) Every outbound link is `rel="noopener noreferrer"`.
 
 ### 45. Administration — `N/A`
 
@@ -501,6 +511,9 @@ requests, zero console errors.** All eight font faces load from local files and
 the typography is pixel-identical to before.
 
 The practical effect on the CSP:
+
+Since 2 October 2026 `frame-src` allows `https://www.google.com` for the
+Location map; it was `'none'` at the time of this audit.
 
 ```
 default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none';

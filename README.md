@@ -110,8 +110,8 @@ style, so e.g. Playfair 400 and 700 are the same `woff2`.
 ## Things worth knowing
 
 - **The Content-Security-Policy in `vercel.json` allows this origin and nothing
-  else** — no inline `<script>`, no inline `style=""`, no third-party host of
-  any kind. If you add any of those, the browser silently refuses to load it.
+  else**, apart from Google Maps in `frame-src` for the Location map — no inline
+  `<script>`, no inline `style=""`, no other third-party host. If you add any of those, the browser silently refuses to load it.
   Put JavaScript in `assets/main.js` and styles in the stylesheets. If you ever
   add a third-party embed (a map, a video, a booking widget), its domain must
   be added to the relevant CSP directive or it will be blocked — and that is
